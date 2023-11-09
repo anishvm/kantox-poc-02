@@ -20,4 +20,4 @@ jobs:
       with:
         context: ./hello-world
         push: true
-        tags: ansih/kantox-poc:latest
+        tags: ansih/kantox-poc:1.0.0
