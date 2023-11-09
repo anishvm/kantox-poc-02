@@ -19,7 +19,7 @@ Project structure:
 
 ```
 
-[_compose.yaml_](docker-compose.yaml)
+[_compose.yaml_](docker-compose.yml)
 ```
 services: 
   web: 
