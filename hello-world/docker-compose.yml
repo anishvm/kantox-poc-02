@@ -3,5 +3,6 @@ services:
     build:
       context: .
       target: builder
+    image: ansih/kantox-poc:latest
     ports: 
       - '8000:8000'
