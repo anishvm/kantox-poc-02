@@ -70,7 +70,7 @@ jobs:
       - name: Update image tag in k8s manifest
         run: |
           pwd
-          sed -i "s+tag:.*+tag: ${{ env.IMAGE_REPO }}:${{ needs.build.outputs.tag }}+g" charts/values.yaml
+          sed -i 's+tag:.*+tag: "${{ needs.build.outputs.tag }}"+g' charts/values.yaml
           git add .
           git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
           git push
