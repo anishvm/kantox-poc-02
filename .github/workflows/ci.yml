@@ -14,7 +14,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: test
       run: |
-        echo "${GITHUB_ACTION_REPOSITORY}"
+        echo $GITHUB_ACTION_REPOSITORY
     - name: version for each merge
       id: tagger
       uses: anothrNick/github-tag-action@1.36.0
@@ -31,7 +31,7 @@ jobs:
       with:
         context: ./hello-world
         push: true
-        tags: ${{ steps.tagger.outputs.new_tag }}
+        tags: $GITHUB_ACTION_REPOSITORY:${{ steps.tagger.outputs.new_tag }}
     - name: Update image tag in k8s manifest
       run: |
         git config --global user.email "anishvm@users.noreply.github.com"
