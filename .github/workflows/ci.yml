@@ -32,3 +32,8 @@ jobs:
       uses: mikefarah/yq@master
       with:
         cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i hello-world/deployment.yml
+
+    - name:Commit Image Version
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: Apply image name changes
