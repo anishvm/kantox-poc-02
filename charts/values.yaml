@@ -7,7 +7,7 @@ replicaCount: 2
 image:
   repository: ansih/kantox-poc
   pullPolicy: IfNotPresent
-  tag: ansih/kantox-poc:v1.9.0
+  tag: "v1.10.0"
 
 #imagePullSecrets: []
 #nameOverride: ""
