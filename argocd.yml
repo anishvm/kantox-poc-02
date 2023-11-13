@@ -1,17 +1,5 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
-environments:
-  dev:
-    destination:
-      namespace: dev
-      server: https://kubernetes.default.svc
-    path: dev
-  prod:
-    destination:
-      namespace: prod
-      server: https://kubernetes.default.svc
-    k8sVersion: v1.10.0
-    path: prod
 metadata:
   name: hello-world
   namespace: argocd
