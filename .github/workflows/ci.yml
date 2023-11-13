@@ -49,3 +49,27 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
         WITH_V: true
+
+  release:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: "${{ secrets.PAT }}"
+          charts_dir: charts
+          packages_with_index: true
+          pages_branch: gh-pages
