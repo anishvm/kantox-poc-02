@@ -12,6 +12,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    outputs:
+      tag: ${{ steps.taggerdyrun.outputs.new_tag }}
     steps:
     - uses: actions/checkout@v3
     - name: get tag value
@@ -31,18 +33,18 @@ jobs:
         context: ./hello-world
         push: true
         tags: ${{ env.IMAGE_REPO }}:${{ steps.taggerdyrun.outputs.new_tag }}
-    - name: Update image tag in k8s manifest
-      run: |
-        git config --global user.email "anishvm@users.noreply.github.com"
-        git config --global user.name "anishvm"
-        pwd
-        sed -i "s+image:.*+image: ${{ env.IMAGE_REPO }}:${{ steps.taggerdyrun.outputs.new_tag }}+g" hello-world/deployment.yml
-        cat hello-world/deployment.yml
-        git add .
-        git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
-        git push
-      env:
-        RUN_NUMBER: ${{ github.run_number }}
+#    - name: Update image tag in k8s manifest
+#      run: |
+#        git config --global user.email "anishvm@users.noreply.github.com"
+#        git config --global user.name "anishvm"
+#        pwd
+#        sed -i "s+image:.*+image: ${{ env.IMAGE_REPO }}:${{ steps.taggerdyrun.outputs.new_tag }}+g" hello-world/deployment.yml
+#        cat hello-world/deployment.yml
+#        git add .
+#        git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
+#        git push
+#      env:
+#        RUN_NUMBER: ${{ github.run_number }}
     - name: Update tag in git
       id: tagger
       uses: anothrNick/github-tag-action@1.36.0
@@ -50,7 +52,9 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.PAT }}
         WITH_V: true
 
+
   release:
+    needs: build
     permissions:
       contents: write
     runs-on: ubuntu-latest
@@ -62,6 +66,16 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Update image tag in k8s manifest
+        run: |
+          pwd
+          sed -i "s+tag:.*+tag: ${{ env.IMAGE_REPO }}:${{ needs.build.outputs.tag }}+g" charts/values.yaml
+          git add .
+          git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
+          git push
+        env:
+          RUN_NUMBER: ${{ github.run_number }}
 
       - name: Install Helm
         uses: azure/setup-helm@v3
