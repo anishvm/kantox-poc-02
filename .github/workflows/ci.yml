@@ -27,16 +27,8 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-  publish:
-    needs: [ build ]
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-    - name: Semantic Release
-      uses: cycjimmy/semantic-release-action@v2
+    - name: Update Image Version
+      id: imgupd
+      uses: mikefarah/yq@master
       with:
-        extra_plugins: |
-          @semantic-release/git
-          @semantic-release/exec
-          @semantic-release/changelog
+        cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i node-app/deployment.yaml
