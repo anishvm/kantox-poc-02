@@ -6,12 +6,12 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'https://github.com/anishvm/kantox-poc-02.git'
-    path: hello-world
-    targetRevision: HEAD
-#  destination:
-#    server: 'https://kubernetes.default.svc'
-#    namespace: dev
+    repoURL: 'https://anishvm.github.io/kantox-poc-02'
+    targetRevision: 1.0.0
+    chart: hello-world
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: dev
   syncPolicy:
     automated:
       prune: true

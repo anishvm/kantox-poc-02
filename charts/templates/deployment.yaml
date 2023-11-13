@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "docs.fullname" . }}
+  name: {{ include "helm.fullname" . }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "docs.fullname" . }}
+      app: {{ include "helm.fullname" . }}
   template:
     metadata:
       labels:
-        app: {{ include "docs.fullname" . }}
+        app: {{ include "helm.fullname" . }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
