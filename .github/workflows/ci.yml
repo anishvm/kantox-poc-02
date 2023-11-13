@@ -12,6 +12,9 @@ jobs:
       contents: write
     steps:
     - uses: actions/checkout@v3
+    - name: test
+      run: |
+        echo "${GITHUB_ACTION_REPOSITORY}"
     - name: version for each merge
       id: tagger
       uses: anothrNick/github-tag-action@1.36.0
