@@ -27,10 +27,9 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-    - name: commit image tag
-      id: update-image
-      uses: Charlyzzz/update-k8s-image
+    - uses: swdotcom/update-and-apply-kubernetes-configs@v1
       with:
-        manifest-path: hello-world/deployment.yml
-        new-image-tag: ${{ steps.meta.outputs.tags }}
-        name: hello-world
+        k8-config-file-paths: hello-world/deployment.yml
+        replacement-method: defined
+      env:
+        IMAGE_TAG: ${{ steps.meta.outputs.tags }}
