@@ -27,12 +27,8 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-#    - name: Update Image Version
-#      id: imgupd
-#      uses: mikefarah/yq@master
-#      with:
-#        cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i hello-world/deployment.yml
-    - id: update-image
+    - name: commit image tag
+      id: update-image
       uses: Charlyzzz/update-k8s-image
       with:
         manifest-path: hello-world/deployment.yml
