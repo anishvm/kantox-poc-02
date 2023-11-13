@@ -34,7 +34,7 @@ jobs:
         git config --global user.email "anishvm@users.noreply.github.com"
         git config --global user.name "anishvm"
         pwd
-        sed -i "s+ansih/kantox-poc.*+ansih/kantox-poc:${{ steps.meta.outputs.tags }}+g" hello-world/deployment.yml
+        sed -i "s+image.*+image: ${{ steps.meta.outputs.tags }}+g" hello-world/deployment.yml
         cat hello-world/deployment.yml
         git add .
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
