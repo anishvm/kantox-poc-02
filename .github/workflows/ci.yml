@@ -29,6 +29,8 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
     - name: modify the image
       run: |
+        git config --global user.email "anishvalloorm@gmail.com"
+        git config --global user.name "anishvm"
         cd hello-world
         cat deployment.yml
         pwd
