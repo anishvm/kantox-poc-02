@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: ansih/kantox-poc:v1.6.2
+        image: ansih/kantox-poc:v1.6.3
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
