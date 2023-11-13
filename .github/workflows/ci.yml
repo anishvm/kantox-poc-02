@@ -30,7 +30,7 @@ jobs:
     - name: modify the image
       run: |
         cd hello-world
-        cat deployment.yaml
+        cat deployment.yml
         pwd
         sed -i "s+ansih/kantox-poc.*+ansih/kantox-poc:${{ steps.meta.outputs.tags }}+g" deployment.yml
         cat deployment.yml
