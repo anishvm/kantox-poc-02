@@ -27,12 +27,14 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-    - name: Update Image Version
-      id: imgupd
-      uses: mikefarah/yq@master
+#    - name: Update Image Version
+#      id: imgupd
+#      uses: mikefarah/yq@master
+#      with:
+#        cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i hello-world/deployment.yml
+    - id: update-image
+      uses: Charlyzzz/update-k8s-image
       with:
-        cmd: yq eval '.spec.template.spec.containers[0].image = "${{ github.event.client_payload.image }}"' -i hello-world/deployment.yml
-    - name: Commit Image Version
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Apply image name changes
+        manifest-path: hello-world/deployment.yml
+        new-image-tag: ${{ steps.meta.outputs.tags }}
+        name: hello-world
