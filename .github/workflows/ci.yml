@@ -29,7 +29,7 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
     - name: modify the image
       run: |
-        git config --global user.email "anishvalloorm@gmail.com"
+        git config --global user.email "anishvm@users.noreply.github.com"
         git config --global user.name "anishvm"
         cd hello-world
         cat deployment.yml
@@ -38,8 +38,6 @@ jobs:
         cat deployment.yml
         git add .
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
-        git push origin main
+        git push
       env:
-        GIT_USERNAME: anishvm
-        GIT_PASSWORD: paCha121@
         RUN_NUMBER: ${{ github.run_number }}
