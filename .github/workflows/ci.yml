@@ -27,9 +27,17 @@ jobs:
         push: true
         tags: ${{ steps.meta.outputs.tags }}
         labels: ${{ steps.meta.outputs.labels }}
-    - uses: swdotcom/update-and-apply-kubernetes-configs@v1
-      with:
-        k8-config-file-paths: hello-world/deployment.yml
-        replacement-method: defined
-      env:
-        IMAGE_TAG: ${{ steps.meta.outputs.tags }}
+    - name: modify the image
+        run: |
+          cd hello-world
+          cat deployment.yaml
+          pwd
+          sed -i "s+ansih/kantox-poc.*+ansih/kantox-poc:${{ steps.meta.outputs.tags }}+g" deployment.yml
+          cat deployment.yml
+          git add .
+          git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
+          git push origin main
+        env:
+          GIT_USERNAME: anishvm
+          GIT_PASSWORD: paCha121@
+          RUN_NUMBER: ${{ github.run_number }}
