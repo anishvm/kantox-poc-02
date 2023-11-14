@@ -59,7 +59,7 @@ jobs:
     - name: Publish helm chart
       run: |
         git checkout gh-pages
-        git merge main --allow-unrelated-histories
+        sed -i 's+tag:.*+tag: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
         helm package charts --version ${{ steps.update.outputs.version }} --app-version ${{ steps.taggerdyrun.outputs.new_tag }} -d docs
         helm repo index docs/ --url https://anishvm.github.io/kantox-poc-02/
         cat docs/index.yaml
