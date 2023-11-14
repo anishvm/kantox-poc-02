@@ -6,7 +6,7 @@ replicaCount: 2
 image:
   repository: ansih/kantox-poc
   pullPolicy: IfNotPresent
-  tag: "v1.10.15"
+  tag: "v1.10.16"
 #imagePullSecrets: []
 #nameOverride: ""
 #fullnameOverride: ""
