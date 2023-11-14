@@ -1,0 +1,34 @@
+name: Dev-Deployment
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [ "main" ]
+env:
+  IMAGE_REPO: ansih/kantox-poc
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v3
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        context: ./hello-world
+        push: true
+        tags: ${{ env.IMAGE_REPO }}:${{ github.head_ref	 }}-${{ github.sha }}
+    - name: Update K8S manifest
+      run: |
+        git config user.name "$GITHUB_ACTOR"
+        git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+        git branch
+        sed -i 's+image:.*+image: ${{ env.IMAGE_REPO }}:${{ github.head_ref	 }}-${{ github.sha }}+g' hello-world/deployment.yml
+        git add -A
+        git commit -m "updated k8s manifest for run ${{ github.head_ref	 }}-{{ github.run_number } "
+        git push

@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Prod-Deployment
 on:
   workflow_dispatch:
   push:
