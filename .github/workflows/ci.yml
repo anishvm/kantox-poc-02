@@ -33,26 +33,12 @@ jobs:
         context: ./hello-world
         push: true
         tags: ${{ env.IMAGE_REPO }}:${{ steps.taggerdyrun.outputs.new_tag }}
-#    - name: Update image tag in k8s manifest
-#      run: |
-#        git config --global user.email "anishvm@users.noreply.github.com"
-#        git config --global user.name "anishvm"
-#        pwd
-#        sed -i "s+image:.*+image: ${{ env.IMAGE_REPO }}:${{ steps.taggerdyrun.outputs.new_tag }}+g" hello-world/deployment.yml
-#        cat hello-world/deployment.yml
-#        git add .
-#        git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
-#        git push
-#      env:
-##        RUN_NUMBER: ${{ github.run_number }}
 #    - name: Update tag in git
 #      id: tagger
 #      uses: anothrNick/github-tag-action@1.36.0
 #      env:
 #        GITHUB_TOKEN: ${{ secrets.PAT }}
 #        WITH_V: true
-
-
   release:
     needs: build
     permissions:
@@ -74,10 +60,16 @@ jobs:
           git push
         env:
           RUN_NUMBER: ${{ github.run_number }}
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Install Helm
         uses: azure/setup-helm@v3
-      - name: Publish helm chart
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        with:
+          charts_dir: charts
+          packages_with_index: true
+          pages_branch: gh-pages
+          mark_as_latest: true
         env:
-          VERSION: ${{ needs.build.outputs.tag }}//v
-        run: |
-          helm package charts --version ${{ github.VERSION }} --app-version ${{ github.VERSION }} -d docs
+          CR_TOKEN: "${{ secrets.PAT }}"
