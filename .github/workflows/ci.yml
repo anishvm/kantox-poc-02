@@ -55,12 +55,14 @@ jobs:
         run: |
           pwd
           sed -i 's+tag:.*+tag: "${{ needs.build.outputs.tag }}"+g' charts/values.yaml
+          cat  charts/values.yaml
           git add .
+          git diff
           git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
           git push
         env:
           RUN_NUMBER: ${{ github.run_number }}
-      - name: Checkout
+      - name: Checkout Again
         uses: actions/checkout@v3
       - name: Install Helm
         uses: azure/setup-helm@v3
