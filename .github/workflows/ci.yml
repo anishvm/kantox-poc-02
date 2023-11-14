@@ -58,7 +58,6 @@ jobs:
       uses: azure/setup-helm@v3
     - name: Publish helm chart
       run: |
-        git pull
         git checkout gh-pages && git rebase main
         helm package charts --version ${{ steps.update.outputs.version }} --app-version ${{ steps.taggerdyrun.outputs.new_tag }} -d docs
         helm repo index docs/ --url https://anishvm.github.io/kantox-poc-02/
