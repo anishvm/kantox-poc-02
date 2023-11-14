@@ -58,8 +58,11 @@ jobs:
       uses: azure/setup-helm@v3
     - name: Publish helm chart
       run: |
+        git checkout gh-pages
+        git pull
+        git merge main
         helm package charts --version ${{ steps.update.outputs.version }} --app-version ${{ steps.taggerdyrun.outputs.new_tag }} -d docs
         helm repo index docs/ --url https://anishvm.github.io/kantox-poc-02/
         cat docs/index.yaml
         git commit -a -m "updated index.yaml"
-        git push --set-upstream origin main
+        git push --set-upstream origin gh-pages
