@@ -55,21 +55,24 @@ jobs:
         run: |
           pwd
           sed -i 's+tag:.*+tag: "${{ needs.build.outputs.tag }}"+g' charts/values.yaml
-          cat  charts/values.yaml
           git add .
           git diff
           git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
           git push
+          git rev-parse HEAD
+          echo "CURRENT_REF=$(git rev-parse HEAD)" >> $GITHUB_ENV
         env:
           RUN_NUMBER: ${{ github.run_number }}
   package:
-    needs: [build, release]
+    needs: release
     permissions:
       contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          ref: ${{ env.CURRENT_REF }}
       - name: Install Helm
         uses: azure/setup-helm@v3
       - name: Run chart-releaser
