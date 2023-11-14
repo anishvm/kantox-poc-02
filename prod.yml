@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://anishvm.github.io/kantox-poc-02'
-    targetRevision: 1.11.0
+    targetRevision: x.x.x
     chart: hello-world
   destination:
     server: 'https://kubernetes.default.svc'
