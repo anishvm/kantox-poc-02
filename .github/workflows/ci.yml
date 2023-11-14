@@ -46,7 +46,7 @@ jobs:
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
         git push
         git rev-parse HEAD
-        echo "CURRENT_REF=$(git rev-parse HEAD)" >> $GITHUB_ENV
+        echo "CURRENT_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
       env:
         RUN_NUMBER: ${{ github.run_number }}
     - name: Update tag in git
@@ -62,11 +62,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get ref
-        run: echo "${{ env.CURRENT_REF }}"
+        run: echo "$CURRENT_REF"
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: ${{ env.CURRENT_REF }}
+          ref: $CURRENT_REF
       - name: Install Helm
         uses: azure/setup-helm@v3
       - name: Run chart-releaser
