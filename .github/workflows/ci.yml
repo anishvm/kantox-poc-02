@@ -1,10 +1,10 @@
 name: Docker Image CI
 on:
   workflow_dispatch:
-#  push:
-#    branches: [ "main" ]
-#  pull_request:
-#    branches: [ "main" ]
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
 env:
   IMAGE_REPO: ansih/kantox-poc
 jobs:
@@ -79,7 +79,7 @@ jobs:
       - name: Update Helm Chart Values
         uses: Nextdoor/helm-set-image-tag-action@main
         with:
-            values_files: charts/values.yaml, charts/Chart.yaml
+            values_files: charts/values.yaml, /Chart.yaml
             tag_keys: .image.tag, .appVersion
             tag_value: ${{ needs.build.outputs.tag }}
             commit_branch: gh-pages
