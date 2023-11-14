@@ -55,6 +55,7 @@ jobs:
         run: |
           pwd
           sed -i 's+tag:.*+tag: "${{ needs.build.outputs.tag }}"+g' charts/values.yaml
+          cat charts/values.yml
           git add .
           git diff
           git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
