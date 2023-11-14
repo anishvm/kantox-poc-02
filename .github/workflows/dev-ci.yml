@@ -31,5 +31,6 @@ jobs:
         sed -i 's+image:.*+image: ${{ env.IMAGE_REPO }}:${{ github.head_ref	 }}-${{ github.sha }}+g' hello-world/deployment.yml
         git add -A
         git commit -m "updated k8s manifest for run ${{ github.head_ref	 }}-${{ github.run_number }}"
+        git config pull.ff only
         git pull origin ${{ github.head_ref }}
         git push origin HEAD:${{ github.head_ref }}
