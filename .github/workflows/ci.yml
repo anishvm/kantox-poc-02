@@ -35,19 +35,6 @@ jobs:
       run: |
         git config user.name "$GITHUB_ACTOR"
         git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-#    - name: Update helm values and charts
-#      id: update
-#      run: |
-#        pwd
-#        sed -i 's+tag:.*+tag: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
-#        version=$(echo "${{steps.taggerdyrun.outputs.new_tag}}" | tr -d "v")
-#        echo "version=$version" >> "$GITHUB_OUTPUT"
-#        git add .
-#        git diff
-#        git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
-#        git push
-#      env:
-#        RUN_NUMBER: ${{ github.run_number }}
     - name: Update tag in git
       id: tagger
       uses: anothrNick/github-tag-action@1.67.0
@@ -65,4 +52,4 @@ jobs:
         helm repo index docs/ --url https://anishvm.github.io/kantox-poc-02/
         cat docs/index.yaml
         git commit -a -m "updated index.yaml"
-        git push --set-upstream origin gh-pages
+        git push
