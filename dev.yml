@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: hello-world
+  name: dev
   namespace: argocd
 spec:
   project: default
   source:
-    repoURL: 'https://anishvm.github.io/kantox-poc-02'
-    targetRevision: 1.0.0
-    chart: hello-world
+    repoURL: 'https://github.com/anishvm/kantox-poc-02.git'
+    targetRevision: develop
+    path: hello-world
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: dev
