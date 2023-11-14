@@ -41,7 +41,7 @@ jobs:
         pwd
         sed -i 's+tag:.*+tag: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
         sed -i 's+appVersion:.*+appVersion: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/Chart.yaml
-        echo "version=$(${{steps.taggerdyrun.outputs.new_tag//v}})"
+        echo "version=$(${{steps.taggerdyrun.outputs.new_tag}}//v)"
         echo "$version"
         sed -i 's+version:.*+version: "$version"+g' charts/Chart.yaml
         git add .
