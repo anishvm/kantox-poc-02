@@ -44,13 +44,13 @@ jobs:
 #        git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
 #        git push
 #      env:
-#        RUN_NUMBER: ${{ github.run_number }}
-    - name: Update tag in git
-      id: tagger
-      uses: anothrNick/github-tag-action@1.36.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.PAT }}
-        WITH_V: true
+##        RUN_NUMBER: ${{ github.run_number }}
+#    - name: Update tag in git
+#      id: tagger
+#      uses: anothrNick/github-tag-action@1.36.0
+#      env:
+#        GITHUB_TOKEN: ${{ secrets.PAT }}
+#        WITH_V: true
 
 
   release:
