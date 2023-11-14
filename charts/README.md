@@ -1,6 +1,6 @@
 # hello-world
 
-![Version: 1.0.2](https://img.shields.io/badge/Version-1.0.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.10.12](https://img.shields.io/badge/AppVersion-v1.10.12-informational?style=flat-square)
+![Version: 1.0.3](https://img.shields.io/badge/Version-1.0.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: v1.10.13](https://img.shields.io/badge/AppVersion-v1.10.13-informational?style=flat-square)
 
 A Helm chart for Kubernetes
 
@@ -10,7 +10,7 @@ A Helm chart for Kubernetes
 |-----|------|---------|-------------|
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.repository | string | `"ansih/kantox-poc"` |  |
-| image.tag | string | `"v1.10.12"` |  |
+| image.tag | string | `"v1.10.13"` |  |
 | replicaCount | int | `2` |  |
 | service.externalPort | int | `8000` |  |
 | service.internalPort | int | `8000` |  |
