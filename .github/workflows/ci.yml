@@ -33,39 +33,30 @@ jobs:
         context: ./hello-world
         push: true
         tags: ${{ env.IMAGE_REPO }}:${{ steps.taggerdyrun.outputs.new_tag }}
-#    - name: Update tag in git
-#      id: tagger
-#      uses: anothrNick/github-tag-action@1.36.0
-#      env:
-#        GITHUB_TOKEN: ${{ secrets.PAT }}
-#        WITH_V: true
-  release:
-    needs: build
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Configure Git
-        run: |
-          git config user.name "$GITHUB_ACTOR"
-          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Update helm values and charts
-        run: |
-          pwd
-          sed -i 's+tag:.*+tag: "${{ needs.build.outputs.tag }}"+g' charts/values.yaml
-          cat charts/values.yml
-          git add .
-          git diff
-          git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
-          git push
-          git rev-parse HEAD
-          echo "CURRENT_REF=$(git rev-parse HEAD)" >> $GITHUB_ENV
-        env:
-          RUN_NUMBER: ${{ github.run_number }}
+    - name: Configure Git
+      run: |
+        git config user.name "$GITHUB_ACTOR"
+        git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+    - name: Update helm values and charts
+      run: |
+        pwd
+        sed -i 's+tag:.*+tag: "${{ needs.build.outputs.tag }}"+g' charts/values.yaml
+        git add .
+        git diff
+        git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
+        git push
+        git rev-parse HEAD
+        echo "CURRENT_REF=$(git rev-parse HEAD)" >> $GITHUB_ENV
+      env:
+        RUN_NUMBER: ${{ github.run_number }}
+    - name: Update tag in git
+      id: tagger
+      uses: anothrNick/github-tag-action@1.36.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.PAT }}
+        WITH_V: true
   package:
-    needs: release
+    needs: build
     permissions:
       contents: write
     runs-on: ubuntu-latest
