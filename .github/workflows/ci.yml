@@ -83,3 +83,11 @@ jobs:
             commit_tag: ${{ needs.build.outputs.tag }}
             commit_message: Automated commit on behalf-of ${{ github.actor }}
             dry: false
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.6.0
+        with:
+          charts_dir: charts
+          packages_with_index: true
+          pages_branch: gh-pages
+        env:
+          CR_TOKEN: "${{ secrets.PAT }}"
