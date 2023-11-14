@@ -52,5 +52,4 @@ jobs:
         helm repo index docs/ --url https://anishvm.github.io/kantox-poc-02/
         cat docs/index.yaml
         git commit -a -m "updated index.yaml"
-        git remote set-url origin https://anishvm:${{ secrets.PAT }}@github.com/anishvm/kantox-poc-02.git
         git push
