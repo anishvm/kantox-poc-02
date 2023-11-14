@@ -45,7 +45,6 @@ jobs:
         git add .
         git diff
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
-        git push
       env:
         RUN_NUMBER: ${{ github.run_number }}
     - name: Update tag in git
@@ -58,16 +57,8 @@ jobs:
       uses: azure/setup-helm@v3
     - name: Publish helm chart
       run: |
-        git checkout gh-pages && git rebase main
         helm package charts --version ${{ steps.update.outputs.version }} --app-version ${{ steps.taggerdyrun.outputs.new_tag }} -d docs
         helm repo index docs/ --url https://anishvm.github.io/kantox-poc-02/
         cat docs/index.yaml
         git commit -a -m "updated index.yaml"
-        git push --set-upstream origin gh-pages
-    - name: Run chart-releaser
-      uses: helm/chart-releaser-action@v1.6.0
-      with:
-        charts_dir: docs
-        pages_branch: gh-pages
-      env:
-        CR_TOKEN: "${{ secrets.PAT }}"
+        git push --set-upstream origin main
