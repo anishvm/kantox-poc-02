@@ -40,7 +40,7 @@ jobs:
     - name: Update helm values and charts
       run: |
         pwd
-        sed -i 's+tag:.*+tag: "${{ needs.build.outputs.tag }}"+g' charts/values.yaml
+        sed -i 's+tag:.*+tag: "${{ step.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
         git add .
         git diff
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
@@ -51,7 +51,7 @@ jobs:
         RUN_NUMBER: ${{ github.run_number }}
     - name: Update tag in git
       id: tagger
-      uses: anothrNick/github-tag-action@1.36.0
+      uses: anothrNick/github-tag-action@1.67.0
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
         WITH_V: true
