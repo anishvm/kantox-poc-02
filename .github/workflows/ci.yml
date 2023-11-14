@@ -12,8 +12,6 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-    outputs:
-      new_ref: ${{ steps.update.outputs.new_ref }}
     steps:
     - uses: actions/checkout@v3
     - name: get tag value
@@ -42,12 +40,14 @@ jobs:
       run: |
         pwd
         sed -i 's+tag:.*+tag: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
+        sed -i 's+appVersion:.*+appVersion: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/Chart.yaml
+        echo "version=$(${{steps.taggerdyrun.outputs.new_tag//v}})"
+        echo "$version"
+        sed -i 's+version:.*+version: "$version"+g' charts/Chart.yaml
         git add .
         git diff
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
         git push
-        git rev-parse HEAD
-        echo "new_ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       env:
         RUN_NUMBER: ${{ github.run_number }}
     - name: Update tag in git
@@ -56,26 +56,14 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.PAT }}
         WITH_V: true
-  package:
-    needs: build
-    permissions:
-      contents: write
-    runs-on: ubuntu-latest
-    steps:
-      - name: get ref
-        run: echo "${{ needs.build.outputs.new_ref }}"
-      - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ needs.build.outputs.new_ref }}
-      - name: Install Helm
-        uses: azure/setup-helm@v3
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
-        with:
-          charts_dir: charts
-          packages_with_index: true
-          pages_branch: gh-pages
-          mark_as_latest: true
-        env:
-          CR_TOKEN: "${{ secrets.PAT }}"
+    - name: Install Helm
+      uses: azure/setup-helm@v3
+    - name: Run chart-releaser
+      uses: helm/chart-releaser-action@v1.6.0
+      with:
+        charts_dir: charts
+        packages_with_index: true
+        pages_branch: gh-pages
+        mark_as_latest: true
+      env:
+        CR_TOKEN: "${{ secrets.PAT }}"
