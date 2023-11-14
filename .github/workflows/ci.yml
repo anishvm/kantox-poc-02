@@ -82,4 +82,4 @@ jobs:
             commit_branch: main
             commit_tag: ${{ needs.build.outputs.tag }}
             commit_message: Automated commit on behalf-of ${{ github.actor }}
-            dry: true
+            dry: false
