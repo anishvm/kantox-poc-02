@@ -61,6 +61,8 @@ jobs:
       contents: write
     runs-on: ubuntu-latest
     steps:
+      - name: get ref
+        run: echo "${{ env.CURRENT_REF }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
