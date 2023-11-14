@@ -13,7 +13,7 @@ jobs:
     permissions:
       contents: write
     outputs:
-      tag: ${{ steps.taggerdyrun.outputs.new_tag }}
+      new_ref: ${{ steps.update.outputs.new_ref }}
     steps:
     - uses: actions/checkout@v3
     - name: get tag value
@@ -38,6 +38,7 @@ jobs:
         git config user.name "$GITHUB_ACTOR"
         git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
     - name: Update helm values and charts
+      id: update
       run: |
         pwd
         sed -i 's+tag:.*+tag: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
@@ -46,7 +47,7 @@ jobs:
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
         git push
         git rev-parse HEAD
-        echo "CURRENT_REF=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+        echo "new_ref=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
       env:
         RUN_NUMBER: ${{ github.run_number }}
     - name: Update tag in git
@@ -62,11 +63,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: get ref
-        run: echo "$CURRENT_REF"
+        run: echo "${{ needs.build.outputs.new_ref }}"
       - name: Checkout
         uses: actions/checkout@v3
         with:
-          ref: $CURRENT_REF
+          ref: ${{ needs.build.outputs.new_ref }}
       - name: Install Helm
         uses: azure/setup-helm@v3
       - name: Run chart-releaser
