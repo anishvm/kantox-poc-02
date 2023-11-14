@@ -3,19 +3,15 @@
 # Declare variables to be passed into your templates.
 
 replicaCount: 2
-
 image:
   repository: ansih/kantox-poc
   pullPolicy: IfNotPresent
-  tag: "v1.10.9"
-
+  tag: "v1.10.11"
 #imagePullSecrets: []
 #nameOverride: ""
 #fullnameOverride: ""
-
 service:
   name: hello-world
   type: LoadBalancer
   externalPort: 8000
   internalPort: 8000
-
