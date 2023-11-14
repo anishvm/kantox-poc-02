@@ -80,4 +80,4 @@ jobs:
         env:
           VERSION: ${{ needs.build.outputs.tag }}//v
         run: |
-          helm package charts --version ${{ github.run_number }} --app-version ${{ github.run_number }} -d docs
+          helm package charts --version ${{ github.VERSION }} --app-version ${{ github.VERSION }} -d docs
