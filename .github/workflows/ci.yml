@@ -40,15 +40,16 @@ jobs:
       run: |
         pwd
         sed -i 's+tag:.*+tag: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
-        sed -i 's+appVersion:.*+appVersion: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/Chart.yaml 
         version=$(echo "${{steps.taggerdyrun.outputs.new_tag}}" | tr -d "v")
-        sed -i "s+version:.*+version: $version+g" charts/Chart.yaml
-        git add .
-        git diff
-        git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
-        git push
-      env:
-        RUN_NUMBER: ${{ github.run_number }}
+        echo "version=$version" >> "$GITHUB_OUTPUT"
+#        sed -i 's+appVersion:.*+appVersion: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/Chart.yaml
+##        sed -i "s+version:.*+version: $version+g" charts/Chart.yaml
+#        git add .
+#        git diff
+#        git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
+#        git push
+#      env:
+#        RUN_NUMBER: ${{ github.run_number }}
     - name: Update tag in git
       id: tagger
       uses: anothrNick/github-tag-action@1.67.0
@@ -57,12 +58,7 @@ jobs:
         WITH_V: true
     - name: Install Helm
       uses: azure/setup-helm@v3
-    - name: Run chart-releaser
-      uses: helm/chart-releaser-action@v1.6.0
-      with:
-        charts_dir: charts
-        packages_with_index: true
-        pages_branch: gh-pages
-        mark_as_latest: true
-      env:
-        CR_TOKEN: "${{ secrets.PAT }}"
+    - name: Publish helm chart
+      run: |
+        cat charts/Chart.yaml
+        helm package charts --version ${{ steps.update.outputs.version }} --app-version ${{ steps.taggerdyrun.outputs.new_tag }} -d docs
