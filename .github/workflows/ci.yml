@@ -60,5 +60,13 @@ jobs:
       uses: azure/setup-helm@v3
     - name: Publish helm chart
       run: |
-        cat charts/Chart.yaml
         helm package charts --version ${{ steps.update.outputs.version }} --app-version ${{ steps.taggerdyrun.outputs.new_tag }} -d docs
+        helm repo index docs/ --url https://anishvm.github.io/kantox-poc-02/
+        cat docs/index.yaml
+    - name: Run chart-releaser
+      uses: helm/chart-releaser-action@v1.6.0
+      with:
+        charts_dir: docs
+        pages_branch: gh-pages
+      env:
+        CR_TOKEN: "${{ secrets.PAT }}"
