@@ -3,9 +3,9 @@ entries:
   hello-world:
   - apiVersion: v2
     appVersion: v1.10.33
-    created: "2023-11-14T14:25:49.658738563Z"
+    created: "2023-11-14T14:28:03.516179056Z"
     description: A Helm chart for Kubernetes
-    digest: 41f86e5db71100b5f377c81340c75d6f8c71bd0181f54c5341d9914f69d919e4
+    digest: 962371615bd3b4261bc6943cec8052eb72d335fb4eb53096632a2fb1548d93b3
     name: hello-world
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 1.10.33
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-11-14T14:25:49.6585221Z"
+    created: "2023-11-14T14:28:03.515973421Z"
     description: A Helm chart for Kubernetes
     digest: c7bbfd064f487c35ed6eff5ec8a478622666db50798b3b532f7560d99d3444bd
     name: hello-world
@@ -21,4 +21,4 @@ entries:
     urls:
     - https://anishvm.github.io/kantox-poc-02/hello-world-1.0.0.tgz
     version: 1.0.0
-generated: "2023-11-14T14:25:49.658211682Z"
+generated: "2023-11-14T14:28:03.515640028Z"
