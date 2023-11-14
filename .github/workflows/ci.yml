@@ -42,8 +42,6 @@ jobs:
         sed -i 's+tag:.*+tag: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
         version=$(echo "${{steps.taggerdyrun.outputs.new_tag}}" | tr -d "v")
         echo "version=$version" >> "$GITHUB_OUTPUT"
-#        sed -i 's+appVersion:.*+appVersion: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/Chart.yaml
-##        sed -i "s+version:.*+version: $version+g" charts/Chart.yaml
         git add .
         git diff
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
