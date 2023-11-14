@@ -51,5 +51,6 @@ jobs:
         helm package charts --version $version --app-version ${{ steps.taggerdyrun.outputs.new_tag }} -d docs     
         helm repo index docs/ --url https://anishvm.github.io/kantox-poc-02/
         cat docs/index.yaml
-        git commit -a -m "updated index.yaml"
+        git add -A
+        git commit -m "updated index.yaml for version $version"
         git push
