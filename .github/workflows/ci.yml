@@ -40,7 +40,7 @@ jobs:
     - name: Update helm values and charts
       run: |
         pwd
-        sed -i 's+tag:.*+tag: "${{ step.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
+        sed -i 's+tag:.*+tag: "${{ steps.taggerdyrun.outputs.new_tag }}"+g' charts/values.yaml
         git add .
         git diff
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
