@@ -79,7 +79,7 @@ jobs:
       - name: Update Helm Chart Values
         uses: Nextdoor/helm-set-image-tag-action@main
         with:
-            values_files: charts/values.yaml, /Chart.yaml
+            values_files: charts/values.yaml, charts/Chart.yaml
             tag_keys: .image.tag, .appVersion
             tag_value: ${{ needs.build.outputs.tag }}
             commit_branch: gh-pages
