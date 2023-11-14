@@ -65,30 +65,19 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
-      - name: Update image tag in k8s manifest
+      - name: Update helm values and charts
         run: |
           pwd
-          sed -i 's+appVersion:.*+appVersion: "${{ needs.build.outputs.tag }}"+g' charts/Chart.yaml
+          sed -i 's+tag:.*+tag: "${{ needs.build.outputs.tag }}"+g' charts/values.yaml
           git add .
           git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
           git push
         env:
           RUN_NUMBER: ${{ github.run_number }}
-      - name: Update Helm Chart Values
-        uses: Nextdoor/helm-set-image-tag-action@main
-        with:
-            values_files: charts/values.yaml
-            tag_value: ${{ needs.build.outputs.tag }}
-            commit_branch: main
-            commit_tag: ${{ needs.build.outputs.tag }}
-            commit_message: Automated commit on behalf-of ${{ github.actor }}
-            dry: false
-      - name: Run chart-releaser
-        uses: helm/chart-releaser-action@v1.6.0
-        with:
-          charts_dir: charts
-          packages_with_index: true
-          pages_branch: gh-pages
-          mark_as_latest: true
+      - name: Install Helm
+        uses: azure/setup-helm@v3
+      - name: Publish helm chart
         env:
-          CR_TOKEN: "${{ secrets.PAT }}"
+          VERSION: ${{ needs.build.outputs.tag }}//v
+        run: |
+          helm package charts --version ${{ github.run_number }} --app-version ${{ github.run_number }} -d docs
