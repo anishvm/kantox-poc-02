@@ -89,5 +89,6 @@ jobs:
           charts_dir: charts
           packages_with_index: true
           pages_branch: gh-pages
+          mark_as_latest: true
         env:
           CR_TOKEN: "${{ secrets.PAT }}"
