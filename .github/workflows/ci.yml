@@ -45,6 +45,7 @@ jobs:
         git add .
         git diff
         git commit -m 'Done  by Github Actions   Job changemanifest: ${{ github.run_number }}'
+        git push
       env:
         RUN_NUMBER: ${{ github.run_number }}
     - name: Update tag in git
