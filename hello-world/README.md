@@ -1,4 +1,4 @@
-## Compose sample application
+## Hello World application
 
 ### Use with Docker Development Environments
 
