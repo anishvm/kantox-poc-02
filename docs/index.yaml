@@ -3,9 +3,9 @@ entries:
   hello-world:
   - apiVersion: v2
     appVersion: v1.12.2
-    created: "2023-11-14T16:23:04.041605176Z"
+    created: "2023-11-15T11:46:37.983193075Z"
     description: A Helm chart for Kubernetes
-    digest: 53a38f3220d2f93bbd9f043e52d74f315357f2a29b582da7dfdfd55cfa0bda4d
+    digest: f34bb11762abed0f18036040fd48c5e8f62a1fccc27e1653ccf98b7da1ac291e
     name: hello-world
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 1.12.2
   - apiVersion: v2
     appVersion: v1.12.1
-    created: "2023-11-14T16:23:04.04141404Z"
+    created: "2023-11-15T11:46:37.982390468Z"
     description: A Helm chart for Kubernetes
     digest: 17352b9bc0e987aa921a4ba45526b4ae13543e863b8d2b8428269dff15f0a735
     name: hello-world
@@ -23,7 +23,7 @@ entries:
     version: 1.12.1
   - apiVersion: v2
     appVersion: v1.12.0
-    created: "2023-11-14T16:23:04.041223565Z"
+    created: "2023-11-15T11:46:37.982140766Z"
     description: A Helm chart for Kubernetes
     digest: 9df0cbc11c51f1eaa41c247b819bd8b7bc7f8ed3b8372379651b08916b14637e
     name: hello-world
@@ -33,7 +33,7 @@ entries:
     version: 1.12.0
   - apiVersion: v2
     appVersion: v1.11.0
-    created: "2023-11-14T16:23:04.041040264Z"
+    created: "2023-11-15T11:46:37.981891464Z"
     description: A Helm chart for Kubernetes
     digest: b147aa284dd5c0fbcb72db261b17ec4d0ed5bb0701038b4f75318be5bdc6e8ca
     name: hello-world
@@ -43,7 +43,7 @@ entries:
     version: 1.11.0
   - apiVersion: v2
     appVersion: v1.10.33
-    created: "2023-11-14T16:23:04.040835863Z"
+    created: "2023-11-15T11:46:37.981485161Z"
     description: A Helm chart for Kubernetes
     digest: 962371615bd3b4261bc6943cec8052eb72d335fb4eb53096632a2fb1548d93b3
     name: hello-world
@@ -53,7 +53,7 @@ entries:
     version: 1.10.33
   - apiVersion: v2
     appVersion: 1.0.0
-    created: "2023-11-14T16:23:04.040622325Z"
+    created: "2023-11-15T11:46:37.981219159Z"
     description: A Helm chart for Kubernetes
     digest: c7bbfd064f487c35ed6eff5ec8a478622666db50798b3b532f7560d99d3444bd
     name: hello-world
@@ -61,4 +61,4 @@ entries:
     urls:
     - https://anishvm.github.io/kantox-poc-02/hello-world-1.0.0.tgz
     version: 1.0.0
-generated: "2023-11-14T16:23:04.040281571Z"
+generated: "2023-11-15T11:46:37.980583454Z"
